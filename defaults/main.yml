@@ -1,0 +1,11 @@
+apt_thirdparty_state: present
+
+apt_thirdparty_repo_format: deb822
+apt_thirdparty_repo_line_remove: "{{ apt_thirdparty_repo_format != 'line' }}"
+apt_thirdparty_repo_suite: "{{ ansible_distribution_release }}"
+apt_thirdparty_repo_components: [main]
+
+apt_thirdparty_unattended_upgrades_filename: "90unattended-upgrades-{{ apt_thirdparty_repo_name }}"
+apt_thirdparty_unattended_upgrades_origins_patterns:
+  "{{ [] if apt_thirdparty_unattended_upgrades_allowed_origins else apt_thirdparty_repo_unattended_upgrades_origins_patterns }}"
+apt_thirdparty_unattended_upgrades_allowed_origins: []

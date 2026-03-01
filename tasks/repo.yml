@@ -1,0 +1,10 @@
+- name: Manage the repository in one-line-style format
+  ansible.builtin.include_tasks: repo_line.yml
+  when: apt_thirdparty_repo_line_manage
+
+- name: Manage the repository in deb822 format
+  ansible.builtin.include_tasks: repo_deb822.yml
+  when: apt_thirdparty_repo_deb822_manage
+
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers

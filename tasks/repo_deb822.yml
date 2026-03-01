@@ -1,0 +1,10 @@
+- name: Manage the repo
+  ansible.builtin.deb822_repository:
+    name: "{{ apt_thirdparty_repo_name }}"
+    types: "deb"
+    uris: "{{ apt_thirdparty_repo_url }}"
+    suites: "{{ apt_thirdparty_repo_suite }}"
+    components: "{{ apt_thirdparty_repo_components }}"
+    signed_by: "{{ apt_thirdparty_repo_key_url }}"
+    state: "{{ apt_thirdparty_repo_deb822_state }}"
+  notify: Update the apt cache

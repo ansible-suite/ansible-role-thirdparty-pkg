@@ -1,0 +1,9 @@
+- name: Install the package
+  ansible.builtin.include_tasks: "pkg-{{ apt_thirdparty_pkg_install_mode }}.yml"
+  when: apt_thirdparty_pkg_state == 'present'
+
+- name: Remove the package
+  ansible.builtin.apt:
+    name: "{{ apt_thirdparty_pkg }}"
+    state: absent
+  when: apt_thirdparty_pkg_state == 'absent'

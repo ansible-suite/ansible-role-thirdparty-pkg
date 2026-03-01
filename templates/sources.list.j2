@@ -1,0 +1,2 @@
+# {{ ansible_managed }}
+deb [signed-by={{ apt_thirdparty_repo_key_path }}] {{ apt_thirdparty_repo_url }} {{ apt_thirdparty_repo_suite }} {{ apt_thirdparty_repo_components | join(' ') }}

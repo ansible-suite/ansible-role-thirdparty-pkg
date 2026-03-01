@@ -1,0 +1,26 @@
+- name: Gather package_facts
+  ansible.builtin.package_facts:
+    manager: apt
+
+- name: Download and install the package
+  when: |
+    not apt_thirdparty_pkg in ansible_facts.packages
+    or (
+      apt_thirdparty_pkg_version is defined
+      and not ansible_facts.packages[apt_thirdparty_pkg][0].version is version(apt_thirdparty_pkg_version, '==')
+    )
+  block:
+    - name: Get a temporary directory for the .deb package to download into
+      ansible.builtin.tempfile:
+        state: directory
+      register: apt_thirdparty_install_tmp_dir
+
+    - name: Download the .deb file from the specified URL
+      ansible.builtin.get_url:
+        url: "{{ apt_thirdparty_pkg_url }}"
+        dest: "{{ apt_thirdparty_install_tmp_dir.path }}/{{ apt_thirdparty_pkg }}.deb"
+        mode: '644'
+
+    - name: Install the package from the downloaded .deb file
+      ansible.builtin.command: apt-get install -y {{ apt_thirdparty_install_tmp_dir.path }}/{{ apt_thirdparty_pkg }}.deb
+      changed_when: true

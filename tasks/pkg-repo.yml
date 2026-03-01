@@ -1,0 +1,4 @@
+- name: Install the package from the repository
+  apt:
+    name: "{{ apt_thirdparty_pkg_specifier }}"
+    state: present

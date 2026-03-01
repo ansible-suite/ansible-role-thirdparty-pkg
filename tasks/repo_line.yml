@@ -1,0 +1,22 @@
+- name: Set up the repository
+  when: "apt_thirdparty_repo_line_state == 'present'"
+  block:
+    - name: Download the repo's key
+      ansible.builtin.get_url:
+        url: "{{ apt_thirdparty_repo_key_url }}"
+        dest: "{{ apt_thirdparty_repo_key_path }}"
+        mode: '644'
+
+    - name: Add the repo
+      ansible.builtin.template:
+        src: sources.list.j2
+        dest: "{{ apt_thirdparty_repo_line_path }}"
+        mode: '644'
+      notify: "Update the apt cache"
+
+- name: Remove the repo
+  ansible.builtin.file:
+    path: "{{ apt_thirdparty_repo_line_path }}"
+    state: absent
+  when: "apt_thirdparty_repo_line_state == 'absent'"
+  notify: "Update the apt cache"

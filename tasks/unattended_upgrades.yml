@@ -1,0 +1,15 @@
+- name: Manage unattended upgrades
+  when: apt_thirdparty_unattended_upgrades
+  block:
+    - name: Add the repo to unattended upgrades
+      ansible.builtin.template:
+        src: unattended-upgrades.j2
+        dest: "/etc/apt/apt.conf.d/{{ apt_thirdparty_unattended_upgrades_filename }}"
+        mode: '644'
+      when: apt_thirdparty_unattended_upgrades_state == 'present'
+
+    - name: Remove the repo from unattended upgrades
+      ansible.builtin.file:
+        path: "/etc/apt/apt.conf.d/{{ apt_thirdparty_unattended_upgrades_filename }}"
+        state: absent
+      when: apt_thirdparty_unattended_upgrades_state == 'absent'

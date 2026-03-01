@@ -1,0 +1,20 @@
+apt_thirdparty_repo_state: "{{ apt_thirdparty_state }}"
+apt_thirdparty_repo_key_path: "/etc/apt/keyrings/{{ apt_thirdparty_repo_name }}.asc"
+apt_thirdparty_repo_line_manage: "{{ apt_thirdparty_repo_format == 'line' or apt_thirdparty_repo_line_remove }}"
+apt_thirdparty_repo_line_state: "{% if apt_thirdparty_repo_line_remove %}absent{% else %}{{ apt_thirdparty_repo_state }}{% endif %}"
+apt_thirdparty_repo_line_path: "/etc/apt/sources.list.d/{{ apt_thirdparty_repo_name }}.list"
+apt_thirdparty_repo_deb822_manage: "{{ apt_thirdparty_repo_format == 'deb822' }}"
+apt_thirdparty_repo_deb822_state: "{{ apt_thirdparty_repo_state }}"
+
+apt_thirdparty_repo_unattended_upgrades_origins_patterns: "{{
+        ['site=' + apt_thirdparty_repo_url | urlsplit('hostname') +
+        ',suite=' + apt_thirdparty_repo_suite] |
+        product(apt_thirdparty_repo_components | map('regex_replace', '^(.*)$', 'component=\\1'))
+        | map('join', ',')
+    }}"
+
+apt_thirdparty_pkg_state: "{{ apt_thirdparty_state }}"
+apt_thirdparty_pkg_install_mode: "{% if apt_thirdparty_pkg_url is defined %}url{% else %}repo{% endif %}"
+apt_thirdparty_pkg_specifier: "{{ apt_thirdparty_pkg }}{% if apt_thirdparty_version is defined %}={{ apt_thirdparty_version }}{% endif %}"
+
+apt_thirdparty_unattended_upgrades_state: "{{ apt_thirdparty_state }}"

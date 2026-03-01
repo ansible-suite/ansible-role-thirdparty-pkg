@@ -1,0 +1,8 @@
+# {{ ansible_managed }}
+{% for origin in apt_thirdparty_unattended_upgrades_allowed_origins %}
+Unattended-Upgrade::Allowed-Origins:: "{{ origin }}";
+{% endfor -%}
+
+{% for pattern in apt_thirdparty_unattended_upgrades_origins_patterns %}
+Unattended-Upgrade::Origins-Pattern:: "{{ pattern }}";
+{% endfor %}

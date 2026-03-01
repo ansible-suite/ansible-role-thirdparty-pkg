@@ -1,0 +1,11 @@
+- name: Configure the repository
+  ansible.builtin.include_tasks: repo.yml
+  when: apt_thirdparty_repo_url is defined
+
+- name: Install the package
+  ansible.builtin.include_tasks: pkg.yml
+  when: apt_thirdparty_pkg is defined
+
+- name: Configure unattended upgrades
+  ansible.builtin.include_tasks: unattended_upgrades.yml
+  when: apt_thirdparty_unattended_upgrades is defined
