@@ -1,3 +1,6 @@
 galaxy_info:
-  description: An ansible role for installing a package using apt from a third-party repository or a .deb file
   author: ansible-suite
+  role_name: apt_thirdparty
+  description: An ansible role for installing a package using apt from a third-party repository or a .deb file
+  license: MIT
+  min_ansible_version: "2.16"
