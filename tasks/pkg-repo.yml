@@ -1,4 +1,4 @@
 - name: Install the package from the repository
-  apt:
+  ansible.builtin.apt:
     name: "{{ apt_thirdparty_pkg_specifier }}"
     state: present

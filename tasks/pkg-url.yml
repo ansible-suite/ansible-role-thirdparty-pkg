@@ -22,5 +22,5 @@
         mode: '644'
 
     - name: Install the package from the downloaded .deb file
-      ansible.builtin.command: apt-get install -y {{ apt_thirdparty_install_tmp_dir.path }}/{{ apt_thirdparty_pkg }}.deb
+      ansible.builtin.command: apt-get install -y {{ apt_thirdparty_install_tmp_dir.path }}/{{ apt_thirdparty_pkg }}.deb # noqa: command-instead-of-module
       changed_when: true
