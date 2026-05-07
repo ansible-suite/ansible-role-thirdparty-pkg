@@ -1,0 +1,11 @@
+- name: Verify Node.js is installed
+  hosts: all
+  tasks:
+    - name: Test nodejs --version
+      ansible.builtin.command: nodejs --version
+      changed_when: false
+      register: run_result
+
+    - name: Print the run output
+      ansible.builtin.debug:
+        var: run_result.stdout

@@ -1,0 +1,13 @@
+- name: Verify VS Code is installed
+  hosts: all
+  tasks:
+    - name: Run code --version
+      ansible.builtin.command: code --no-sandbox --user-data-dir=/tmp/vscode --version
+      environment:
+        DONT_PROMPT_WSL_INSTALL: "1"
+      changed_when: false
+      register: run_result
+
+    - name: Print the run output
+      ansible.builtin.debug:
+        var: run_result.stdout

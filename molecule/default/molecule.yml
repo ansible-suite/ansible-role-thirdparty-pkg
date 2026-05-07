@@ -1,0 +1,26 @@
+# Based on https://github.com/robertdebock/ansible-role-openssh/blob/3ef8022bcc5a67f08262514f2ae754a537b40506/molecule/default/molecule.yml
+
+dependency:
+  name: galaxy
+  options:
+    role-file: requirements.yml
+    requirements-file: requirements.yml
+driver:
+  name: docker
+platforms:
+  - name: "molecule-apt_thirdparty-${image:-ubuntu}-${tag:-latest}"
+    image: "${image:-ubuntu}:${tag:-latest}"
+ansible:
+  playbooks:
+    prepare: ../default/prepare.yml
+    converge: converge.yml
+scenario:
+  test_sequence:
+    - dependency
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    - verify
+    - destroy

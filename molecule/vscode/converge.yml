@@ -1,0 +1,21 @@
+- name: Install Visual Studio Code from official repository
+  hosts: all
+  become: true
+  roles:
+    - ansible-suite.apt_thirdparty
+  pre_tasks:
+    - name: Set debconf value not to add Microsoft repository
+      ansible.builtin.debconf:
+        name: code
+        question: code/add-microsoft-repo
+        value: "false"
+        vtype: boolean
+  vars:
+    apt_thirdparty_repo_name: vscode
+    apt_thirdparty_repo_url: https://packages.microsoft.com/repos/code
+    apt_thirdparty_repo_key_url: https://packages.microsoft.com/keys/microsoft.asc
+    apt_thirdparty_repo_suite: stable
+    apt_thirdparty_repo_components: [main]
+    apt_thirdparty_pkg: code
+    apt_thirdparty_unattended_upgrades: true
+    apt_thirdparty_unattended_upgrades_allowed_origins: ["code stable:stable"]

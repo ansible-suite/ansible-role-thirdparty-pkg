@@ -1,0 +1,5 @@
+- name: Import the nodejs playbook
+  ansible.builtin.import_playbook: ../nodejs/verify.yml
+
+- name: Import the vscode playbook
+  ansible.builtin.import_playbook: ../vscode/verify.yml
